@@ -1,0 +1,112 @@
+def print_card_name(card_rank):
+  if card_rank == 1:
+    print ("Drew an Ace")
+  elif card_rank == 11:
+    print ("Drew a Jack")
+  elif card_rank== 12:
+    print ("Drew a Queen")
+  elif card_rank == 13:
+    print ("Drew a King")
+  elif card_rank == 8:
+    print ("Drew an " + str(card_rank))
+  elif card_rank > 1 and card_rank < 11:
+    print ("Drew a "  + str(card_rank))
+  else:
+    print("BAD CARD")
+
+def draw_card():
+  card_rank=randint(1,13)
+  card_value=0
+  if card_rank == 1:
+    print_card_name(card_rank)
+    card_value=11
+  elif card_rank == 11:
+    print_card_name(card_rank)
+    card_value= 10
+  elif card_rank== 12:
+    print_card_name(card_rank)
+    card_value= 10
+  elif card_rank == 13:
+    print_card_name(card_rank)
+    card_value=10
+  elif card_rank > 1 and card_rank < 11:
+    print_card_name(card_rank)
+    card_value=card_rank
+  else:
+    return "BAD CARD"
+  return card_value
+
+
+def print_header(message):
+    print('-----------')
+    print(message)
+    print('-----------')
+
+def draw_starting_hand(name):
+    hand_total=0
+    card_count=0
+    print_header(name+" TURN")
+    while card_count<2:
+      card_count+=1
+      hand_total+=draw_card()
+    return hand_total
+
+
+def print_end_turn_status(hand_value):
+    if hand_value==21:
+      print(f"Final hand: {hand_value}.")
+      print("BLACKJACK!")
+    elif hand_value>21:
+      print(f"Final hand: {hand_value}.")
+      print("BUST.")
+    else:
+      print(f"Final hand: {hand_value}.")
+
+def print_end_game_status(user_hand, dealer_hand):
+    # Implement print_end_game_status function here
+    print_header("GAME RESULT")
+    if user_hand>21:
+      print("Dealer wins!")
+    elif dealer_hand>21:
+      print("You win!")
+    elif user_hand>dealer_hand:
+      print("You win!")
+    elif dealer_hand>user_hand:
+      print("Dealer wins!")
+    elif dealer_hand==user_hand:
+      print("Push.")
+
+
+# USER'S TURN
+storage_user=draw_starting_hand("YOUR")
+option=""
+draw=0
+
+while option!="n" and storage_user<21:
+  option= input(f"You have {storage_user}. Hit (y/n)? ")
+  if option=="y":
+    draw=draw_card()
+    storage_user+=draw
+  elif option!= "y" and option!= "n":
+    print("Sorry I didn't get that.")
+if storage_user >= 21 or option=="n":
+  print_end_turn_status(storage_user)
+
+
+# DEALER'S TURN 
+storage_dealer=draw_starting_hand("DEALER")
+draw=0
+
+while storage_dealer<17:
+  print(f"Dealer has {storage_dealer}.")
+  draw=draw_card()
+  storage_dealer+=draw
+  
+if storage_dealer >= 17:
+  print_end_turn_status(storage_dealer)
+
+# GAME RESULT 
+print_end_game_status(storage_user,storage_dealer)
+
+
+
