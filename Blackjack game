@@ -1,3 +1,5 @@
+from random import randint
+
 def print_card_name(card_rank):
   if card_rank == 1:
     print ("Drew an Ace")
